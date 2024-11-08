@@ -1,0 +1,32 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks       # это база
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+
+-   repo: https://github.com/psf/black                          # cosmetic improvements of code
+    rev: 22.10.0
+    hooks:
+    -   id: black
+
+-   repo: https://github.com/pycqa/flake8                       # use linter(flake8)
+    rev: 7.1.1                                                  # better to use >= 5.0.0 version, because arise some
+    hooks:                                                      # errors due to libraries collapse
+    -   id: flake8
+
+-   repo: https://github.com/psf/black                          # cosmetic improvements of code
+    rev: 22.10.0
+    hooks:
+    -   id: black
+
+-   repo: local                                                 # check of message, i use bash-line script
+    hooks:
+    -   id: commit-msg
+        name: Check commit message
+        language: system
+        entry: bash -c 'if ! grep -qE "update|add|delete|fix" ".git/COMMIT_EDITMSG"; then echo "Your message should contain [updated|added|deleted|fixed]"; exit 1; else echo "valid commit-msg"; exit 0;fi '
+        stages: [commit-msg]
+
+exclude: '.env/|__pycache__/'
